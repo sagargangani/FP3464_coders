@@ -178,8 +178,8 @@ public class Home{
         classes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Class classroom = new Class();
-                classroom.classView();
+//                Class classroom = new Class();
+//                classroom.classView();
             }
         });
         //----------------------------------------------------------
@@ -199,9 +199,9 @@ public class Home{
 
     public String getUser(int id) throws SQLException {
         //ENTER PORT, USER, PASSWORD.
-        String url = "jdbc:mysql://127.0.0.1:3306/attendance";
+        String url = "jdbc:mysql://localhost:3306/attendance";
         String user = "root";
-        String pass = "admin@123";
+        String pass = "Sagar2612$";
         Connection con = DriverManager.getConnection(url, user, pass);
         String str = "SELECT name FROM user WHERE id = "+id;
         Statement stm = con.createStatement();

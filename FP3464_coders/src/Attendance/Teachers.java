@@ -341,9 +341,9 @@ public class Teachers {
     public ResultSet dbSearch() throws SQLException {
         //ENTER PORT, USER, PASSWORD.
         String str1 = "SELECT user.id, user.username, teachers.name FROM user, teachers where user.id = teachers.id";
-        String url = "jdbc:mysql://127.0.0.1:3306/attendance";
+        String url = "jdbc:mysql://localhost:3306/attendance";
         String user = "root";
-        String pass = "admin@123";
+        String pass = "Sagar2612$";
         con = DriverManager.getConnection(url, user, pass);
         Statement stm = con.createStatement();
         ResultSet rst = stm.executeQuery(str1);

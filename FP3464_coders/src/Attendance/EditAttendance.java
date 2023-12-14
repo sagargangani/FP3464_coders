@@ -1,3 +1,5 @@
+package Attendance;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -34,7 +36,7 @@ public class EditAttendance {
         Font text = new Font("Times New Roman", Font.PLAIN, 18);
         Font btn = new Font("Times New Roman", Font.BOLD, 20);
 
-        // ------------------------CLOSE---------------------------
+        //------------------------CLOSE---------------------------
         JLabel x = new JLabel("X");
         x.setForeground(Color.decode("#37474F"));
         x.setBounds(965, 10, 100, 20);
@@ -46,9 +48,9 @@ public class EditAttendance {
                 System.exit(0);
             }
         });
-        // ----------------------------------------------------------
+        //----------------------------------------------------------
 
-        // -----------------------BACK---------------------------------
+        //-----------------------BACK---------------------------------
         JLabel back = new JLabel("< BACK");
         back.setForeground(Color.decode("#37474F"));
         back.setFont(new Font("Times New Roman", Font.BOLD, 17));
@@ -60,66 +62,66 @@ public class EditAttendance {
                 frame.dispose();
             }
         });
-        // --------------------------------------------------------------
+        //--------------------------------------------------------------
 
-        // ------------------Panel----------------------------------
-        JPanel panel = new JPanel();
+        //------------------Panel----------------------------------
+        JPanel panel = new  JPanel();
         panel.setBounds(0, 0, 1000, 35);
         panel.setBackground(Color.decode("#DEE4E7"));
         frame.add(panel);
-        // ---------------------------------------------------------
+        //---------------------------------------------------------
 
-        // ----------------TABLE---------------------------------
+        //----------------TABLE---------------------------------
         @SuppressWarnings("serial")
-        JTable table = new JTable() {
-            public boolean isCellEditable(int row, int column) {
-                if (column == 3)
+        JTable table=new JTable(){
+            public boolean isCellEditable(int row,int column){
+                if(column == 3)
                     return true;
                 else
                     return false;
             }
         };
-        model = (DefaultTableModel) table.getModel();
+        model = (DefaultTableModel)table.getModel();
         model.addColumn("ID");
         model.addColumn("NAME");
         model.addColumn("STATUS");
         table.getColumnModel().getColumn(0).setPreferredWidth(50);
         table.getColumnModel().getColumn(1).setPreferredWidth(200);
         table.getColumnModel().getColumn(2).setPreferredWidth(200);
-        JScrollPane scPane = new JScrollPane(table);
+        JScrollPane scPane=new JScrollPane(table);
         scPane.setBounds(500, 50, 480, 525);
         frame.add(scPane);
-        // ------------------------------------------------------
+        //------------------------------------------------------
 
-        // -------------------------DATE-------------------------
+        //-------------------------DATE-------------------------
         JLabel dt = new JLabel("DATE : ");
         dt.setFont(text);
         dt.setBounds(25, 60, 75, 20);
         dt.setForeground(Color.decode("#DEE4E7"));
         frame.add(dt);
-        JTextField dtbox = new JTextField();
+        JTextField dtbox= new JTextField();
         dtbox.setBounds(100, 60, 150, 25);
         dtbox.setBackground(Color.decode("#DEE4E7"));
         dtbox.setFont(text);
         dtbox.setForeground(Color.decode("#37474F"));
-        String dateInString = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String dateInString =new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         dtbox.setText(dateInString);
         frame.add(dtbox);
-        // -------------------------------------------------------
+        //-------------------------------------------------------
 
-        // --------------------CLASS---------------------------------
+        //--------------------CLASS---------------------------------
         JLabel classes = new JLabel("CLASS : ");
         classes.setFont(text);
         classes.setBounds(25, 150, 100, 20);
         classes.setForeground(Color.decode("#DEE4E7"));
         frame.add(classes);
         @SuppressWarnings("unchecked")
-        JComboBox clss = new JComboBox(classEt());
+        JComboBox clss= new JComboBox(classEt());
         clss.setBounds(110, 150, 50, 25);
         frame.add(clss);
-        // ------------------------------------------------------------
+        //------------------------------------------------------------
 
-        // ----------------------VIEWBUTTON-----------------------
+        //----------------------VIEWBUTTON-----------------------
         JButton view = new JButton("VIEW");
         view.setBounds(175, 275, 150, 50);
         view.setFont(btn);
@@ -132,9 +134,9 @@ public class EditAttendance {
                 tblupdt(String.valueOf(clss.getSelectedItem()), dtbox.getText());
             }
         });
-        // -------------------------------------------------------
+        //-------------------------------------------------------
 
-        // ----------------------ABSENTBUTTON-----------------------
+        //----------------------ABSENTBUTTON-----------------------
         JButton ab = new JButton("ABSENT");
         ab.setBounds(75, 365, 150, 50);
         ab.setFont(btn);
@@ -147,9 +149,9 @@ public class EditAttendance {
                 table.setValueAt("Absent", table.getSelectedRow(), 2);
             }
         });
-        // -------------------------------------------------------
+        //-------------------------------------------------------
 
-        // ----------------------PRESENTBUTTON-----------------------
+        //----------------------PRESENTBUTTON-----------------------
         JButton pre = new JButton("PRESENT");
         pre.setBounds(275, 365, 150, 50);
         pre.setFont(btn);
@@ -163,9 +165,9 @@ public class EditAttendance {
                 table.setValueAt("Present", table.getSelectedRow(), 2);
             }
         });
-        // -------------------------------------------------------
+        //-------------------------------------------------------
 
-        // ----------------------SUBMITBUTTON-----------------------
+        //----------------------SUBMITBUTTON-----------------------
         JButton sbmt = new JButton("SUBMIT");
         sbmt.setBounds(75, 450, 150, 50);
         sbmt.setFont(btn);
@@ -175,23 +177,22 @@ public class EditAttendance {
         sbmt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < table.getRowCount(); i++) {
+                for(int i= 0; i<table.getRowCount(); i++) {
                     try {
-                        editItem(Integer.parseInt(String.valueOf(table.getValueAt(i, 0))),
-                                String.valueOf(table.getValueAt(i, 2)), dtbox.getText());
+                        editItem(Integer.parseInt(String.valueOf(table.getValueAt(i, 0))), String.valueOf(table.getValueAt(i, 2)), dtbox.getText());
                     } catch (NumberFormatException | SQLException e1) {
                         e1.printStackTrace();
                     }
                 }
-                for (int i = 0; i < model.getRowCount(); i++) {
+                for (int i=0; i < model.getRowCount(); i++) {
                     model.removeRow(i);
                     model.setRowCount(0);
                 }
             }
         });
-        // -------------------------------------------------------
+        //-------------------------------------------------------
 
-        // ----------------------DELETEBUTTON-----------------------
+        //----------------------DELETEBUTTON-----------------------
         JButton del = new JButton("DELETE");
         del.setBounds(275, 450, 150, 50);
         del.setFont(btn);
@@ -201,8 +202,7 @@ public class EditAttendance {
         del.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String adding = "DELETE FROM attend WHERE class = '" + String.valueOf(clss.getSelectedItem())
-                        + "' AND dt = '" + dtbox.getText() + "'";
+                String adding = "DELETE FROM attend WHERE class = '"+String.valueOf(clss.getSelectedItem())+"' AND dt = '"+dtbox.getText()+"'";
                 try {
                     Statement stm = con.createStatement();
                     stm.executeUpdate(adding);
@@ -210,16 +210,16 @@ public class EditAttendance {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
-                for (int i = 0; i < model.getRowCount(); i++) {
+                for (int i=0; i < model.getRowCount(); i++) {
                     model.removeRow(i);
                     model.setRowCount(0);
                 }
             }
         });
-        // -------------------------------------------------------
+        //-------------------------------------------------------
 
-        // -------------------------------------------------------
-        frame.setSize(1000, 600);
+        //-------------------------------------------------------
+        frame.setSize(1000,600);
         frame.setResizable(false);
         frame.setLayout(null);
         frame.setUndecorated(true);
@@ -228,11 +228,11 @@ public class EditAttendance {
         frame.setFocusable(true);
         frame.getContentPane().setBackground(Color.decode("#37474F"));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // --------------------------------------------------------------
+        //--------------------------------------------------------------
     }
 
     public void connect() throws SQLException {
-        // ENTER PORT, USER, PASSWORD.
+        //ENTER PORT, USER, PASSWORD.
         String url = "jdbc:mysql://localhost:3306/attendance";
         String user = "root";
         String pass = "password";
@@ -240,9 +240,8 @@ public class EditAttendance {
     }
 
     public ResultSet dbSearch(String classes, String dt) throws SQLException {
-        // ENTER PORT, USER, PASSWORD.
-        String str1 = "SELECT * from attend, students where attend.stid=students.id AND attend.class = '" + classes
-                + "' AND attend.dt = '" + dt + "'";
+        //ENTER PORT, USER, PASSWORD.
+        String str1 = "SELECT * from attend, students where attend.stid=students.id AND attend.class = '"+classes+"' AND attend.dt = '"+dt+"'";
         Statement stm = con.createStatement();
         ResultSet rst = stm.executeQuery(str1);
         return rst;
@@ -253,8 +252,8 @@ public class EditAttendance {
         Statement stm = con.createStatement();
         ResultSet rst = stm.executeQuery(str1);
         String[] rt = new String[25];
-        int i = 0;
-        while (rst.next()) {
+        int i=0;
+        while(rst.next()) {
             rt[i] = rst.getString("name");
             i++;
         }
@@ -263,12 +262,12 @@ public class EditAttendance {
 
     public void tblupdt(String classes, String dt) {
         try {
-            for (int i = 0; i < model.getRowCount(); i++) {
+            for (int i=0; i < model.getRowCount(); i++) {
                 model.removeRow(i);
                 model.setRowCount(0);
             }
             ResultSet res = dbSearch(classes, dt);
-            for (int i = 0; res.next(); i++) {
+            for(int i=0; res.next(); i++) {
                 model.addRow(new Object[0]);
                 model.setValueAt(res.getInt("stid"), i, 0);
                 model.setValueAt(res.getString("name"), i, 1);
@@ -280,7 +279,7 @@ public class EditAttendance {
     }
 
     public void editItem(int id, String status, String date) throws SQLException {
-        String adding = "UPDATE attend SET status = '" + status + "' WHERE stid = " + id + " AND dt = '" + date + "'";
+        String adding = "UPDATE attend SET status = '"+status+"' WHERE stid = "+id+" AND dt = '"+date+"'";
         Statement stm = con.createStatement();
         stm.executeUpdate(adding);
     }

@@ -1,3 +1,5 @@
+package Attendance;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -25,14 +27,13 @@ import javax.swing.table.DefaultTableModel;
 public class AddAttendance {
     Connection con;
     DefaultTableModel model = new DefaultTableModel();
-
     public void addView() throws SQLException {
         connect();
         JFrame frame = new JFrame();
         Font text = new Font("Times New Roman", Font.PLAIN, 18);
         Font btn = new Font("Times New Roman", Font.BOLD, 20);
 
-        // ------------------------CLOSE---------------------------
+        //------------------------CLOSE---------------------------
         JLabel x = new JLabel("X");
         x.setForeground(Color.decode("#37474F"));
         x.setBounds(965, 10, 100, 20);
@@ -44,9 +45,9 @@ public class AddAttendance {
                 System.exit(0);
             }
         });
-        // ----------------------------------------------------------
+        //----------------------------------------------------------
 
-        // -----------------------BACK---------------------------------
+        //-----------------------BACK---------------------------------
         JLabel back = new JLabel("< BACK");
         back.setForeground(Color.decode("#37474F"));
         back.setFont(new Font("Times New Roman", Font.BOLD, 17));
@@ -58,71 +59,71 @@ public class AddAttendance {
                 frame.dispose();
             }
         });
-        // --------------------------------------------------------------
+        //--------------------------------------------------------------
 
-        // ------------------Panel----------------------------------
-        JPanel panel = new JPanel();
+        //------------------Panel----------------------------------
+        JPanel panel = new  JPanel();
         panel.setBounds(0, 0, 1000, 35);
         panel.setBackground(Color.decode("#DEE4E7"));
         frame.add(panel);
-        // ---------------------------------------------------------
+        //---------------------------------------------------------
 
-        // ----------------TABLE---------------------------------
+        //----------------TABLE---------------------------------
         @SuppressWarnings("serial")
-        JTable table = new JTable() {
-            public boolean isCellEditable(int row, int column) {
+        JTable table=new JTable(){
+            public boolean isCellEditable(int row,int column){
                 return false;
             }
         };
-        model = (DefaultTableModel) table.getModel();
+        model = (DefaultTableModel)table.getModel();
         model.addColumn("ID");
         model.addColumn("NAME");
         model.addColumn("STATUS");
         table.getColumnModel().getColumn(0).setPreferredWidth(50);
         table.getColumnModel().getColumn(1).setPreferredWidth(200);
         table.getColumnModel().getColumn(2).setPreferredWidth(200);
-        JScrollPane scPane = new JScrollPane(table);
+        JScrollPane scPane=new JScrollPane(table);
         scPane.setBounds(500, 50, 480, 525);
         frame.add(scPane);
-        // ------------------------------------------------------
+        //------------------------------------------------------
 
-        // -------------------------DATE-------------------------
+        //-------------------------DATE-------------------------
         JLabel dt = new JLabel("DATE : ");
         dt.setFont(text);
         dt.setBounds(25, 60, 75, 20);
         dt.setForeground(Color.decode("#DEE4E7"));
         frame.add(dt);
-        JTextField dtbox = new JTextField();
+        JTextField dtbox= new JTextField();
         dtbox.setBounds(100, 60, 150, 25);
         dtbox.setBackground(Color.decode("#DEE4E7"));
         dtbox.setFont(text);
         dtbox.setForeground(Color.decode("#37474F"));
-        String dateInString = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String dateInString =new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         dtbox.setText(dateInString);
         frame.add(dtbox);
-        // -------------------------------------------------------
+        //-------------------------------------------------------
 
-        // --------------------CLASS---------------------------------
+        //--------------------CLASS---------------------------------
         JLabel classes = new JLabel("CLASS : ");
         classes.setFont(text);
         classes.setBounds(25, 150, 100, 20);
         classes.setForeground(Color.decode("#DEE4E7"));
         frame.add(classes);
         @SuppressWarnings("unchecked")
-        JComboBox clss = new JComboBox(classEt());
+        JComboBox clss= new JComboBox(classEt());
         clss.setBounds(110, 150, 50, 25);
         frame.add(clss);
-        // ------------------------------------------------------------
+        //------------------------------------------------------------
 
-        // ---------------------ALREADY ADDED------------------------
+        //---------------------ALREADY ADDED------------------------
         JLabel txt = new JLabel("");
         txt.setFont(text);
         txt.setBounds(125, 525, 350, 20);
         txt.setForeground(Color.red);
         frame.add(txt);
-        // -------------------------------------------------------------
+        //-------------------------------------------------------------
 
-        // ----------------------VIEWBUTTON-----------------------
+        //----------------------VIEWBUTTON-----------------------
         JButton view = new JButton("VIEW");
         view.setBounds(175, 275, 150, 50);
         view.setFont(btn);
@@ -133,7 +134,7 @@ public class AddAttendance {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (check(String.valueOf(clss.getSelectedItem()), dtbox.getText()))
+                    if(check(String.valueOf(clss.getSelectedItem()), dtbox.getText()))
                         txt.setText("Attendance Already marked!!!");
                     else
                         tblupdt(String.valueOf(clss.getSelectedItem()));
@@ -142,9 +143,9 @@ public class AddAttendance {
                 }
             }
         });
-        // -------------------------------------------------------
+        //-------------------------------------------------------
 
-        // ----------------------ABSENTBUTTON-----------------------
+        //----------------------ABSENTBUTTON-----------------------
         JButton ab = new JButton("ABSENT");
         ab.setBounds(75, 365, 150, 50);
         ab.setFont(btn);
@@ -157,9 +158,9 @@ public class AddAttendance {
                 table.setValueAt("Absent", table.getSelectedRow(), 2);
             }
         });
-        // -------------------------------------------------------
+        //-------------------------------------------------------
 
-        // ----------------------PRESENTBUTTON-----------------------
+        //----------------------PRESENTBUTTON-----------------------
         JButton pre = new JButton("PRESENT");
         pre.setBounds(275, 365, 150, 50);
         pre.setFont(btn);
@@ -173,9 +174,9 @@ public class AddAttendance {
                 table.setValueAt("Present", table.getSelectedRow(), 2);
             }
         });
-        // -------------------------------------------------------
+        //-------------------------------------------------------
 
-        // ----------------------SUBMITBUTTON-----------------------
+        //----------------------SUBMITBUTTON-----------------------
         JButton sbmt = new JButton("SUBMIT");
         sbmt.setBounds(175, 450, 150, 50);
         sbmt.setFont(btn);
@@ -185,25 +186,24 @@ public class AddAttendance {
         sbmt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < table.getRowCount(); i++) {
+                for(int i= 0; i<table.getRowCount(); i++) {
                     try {
-                        addItem(Integer.parseInt(String.valueOf(table.getValueAt(i, 0))),
-                                String.valueOf(table.getValueAt(i, 2)), dtbox.getText(),
-                                String.valueOf(clss.getSelectedItem()));
+                        addItem(Integer.parseInt(String.valueOf(table.getValueAt(i, 0))), String.valueOf(table.getValueAt(i, 2)), dtbox.getText(), String.valueOf(clss.getSelectedItem()));
                     } catch (NumberFormatException | SQLException e1) {
                         e1.printStackTrace();
                     }
                 }
-                for (int i = 0; i < model.getRowCount(); i++) {
+                for (int i=0; i < model.getRowCount(); i++) {
                     model.removeRow(i);
                     model.setRowCount(0);
                 }
             }
         });
-        // -------------------------------------------------------
+        //-------------------------------------------------------
 
-        // -------------------------------------------------------
-        frame.setSize(1000, 600);
+
+        //-------------------------------------------------------
+        frame.setSize(1000,600);
         frame.setResizable(false);
         frame.setLayout(null);
         frame.setUndecorated(true);
@@ -212,19 +212,19 @@ public class AddAttendance {
         frame.setFocusable(true);
         frame.getContentPane().setBackground(Color.decode("#37474F"));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // --------------------------------------------------------------
+        //--------------------------------------------------------------
     }
 
     public void connect() throws SQLException {
-        // ENTER PORT, USER, PASSWORD.
+        //ENTER PORT, USER, PASSWORD.
         String url = "jdbc:mysql://localhost:3306/attendance";
         String user = "root";
-        String pass = "password";
+        String pass = "Sagar2612$";
         con = DriverManager.getConnection(url, user, pass);
     }
 
     public ResultSet dbSearch(String classes) throws SQLException {
-        String str1 = "SELECT * from students where class = '" + classes + "'";
+        String str1 = "SELECT * from students where class = '"+classes+"'";
         Statement stm = con.createStatement();
         ResultSet rst = stm.executeQuery(str1);
         return rst;
@@ -235,8 +235,8 @@ public class AddAttendance {
         Statement stm = con.createStatement();
         ResultSet rst = stm.executeQuery(str1);
         String[] rt = new String[25];
-        int i = 0;
-        while (rst.next()) {
+        int i=0;
+        while(rst.next()) {
             rt[i] = rst.getString("name");
             i++;
         }
@@ -244,13 +244,13 @@ public class AddAttendance {
     }
 
     public void tblupdt(String classes) {
-        for (int i = 0; i < model.getRowCount(); i++) {
+        for (int i=0; i < model.getRowCount(); i++) {
             model.removeRow(i);
             model.setRowCount(0);
         }
         try {
             ResultSet res = dbSearch(classes);
-            for (int i = 0; res.next(); i++) {
+            for(int i=0; res.next(); i++) {
                 model.addRow(new Object[0]);
                 model.setValueAt(res.getInt("id"), i, 0);
                 model.setValueAt(res.getString("name"), i, 1);
@@ -262,16 +262,16 @@ public class AddAttendance {
     }
 
     public void addItem(int id, String status, String date, String classes) throws SQLException {
-        String adding = "INSERT INTO attend values(" + id + ", '" + date + "', '" + status + "', '" + classes + "')";
+        String adding = "INSERT INTO attend values("+id+", '"+date+"', '"+status+"', '"+classes+"')";
         Statement stm = con.createStatement();
         stm.executeUpdate(adding);
     }
 
     public boolean check(String classes, String dt) throws SQLException {
-        String str1 = "select * from attend where class = '" + classes + "' AND dt = '" + dt + "'";
+        String str1 = "select * from attend where class = '"+classes+"' AND dt = '"+dt+"'";
         Statement stm = con.createStatement();
         ResultSet rst = stm.executeQuery(str1);
-        if (rst.next())
+        if(rst.next())
             return true;
         else
             return false;
