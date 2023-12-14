@@ -25,9 +25,9 @@ public class Login{
     public void loginView() {
         JFrame frame = new JFrame();
         Font text = new Font("Times New Roman", Font.PLAIN, 20);
-        Home hm = new Home();
-        TeacherView tview = new TeacherView();
-        Attendance.StudentView sview = new StudentView();
+//        Home hm = new Home();
+//        TeacherView tview = new TeacherView();
+//        Attendance.StudentView sview = new StudentView();
 
         //-------------------------LOGO--------------------------
         JLabel attendance = new JLabel("ATTENDANCE");
@@ -151,11 +151,11 @@ public class Login{
                     }
                     else {
                         if(res == 1)
-                            hm.homeView(usr);
-                        else if(res == 2)
-                            tview.tcView(usr);
-                        else if (res == 3)
-                            sview.stView(usr);
+//                            hm.homeView(usr);
+//                        else if(res == 2)
+//                            tview.tcView(usr);
+//                        else if (res == 3)
+//                            sview.stView(usr);
                         frame.dispose();
                     }
                 } catch (SQLException e1) {
